@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zn-CN">
+<head>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <meta charset="UTF-8">
+    <title>家庭收入管理平台</title>
+</head>
+<body role="document">
+<!--导航栏-->
+<nav class="navbar navbar-expend-sm bg-dark navbar-dark fixed-top">
+    <div align="left">
+        <ul class="nav justify-content">
+            <li class="nav-link">
+                <a style="color:white" href="#">{{ user }}</a>
+            </li>
+            <li class="nav-link">
+                <a style="color:white" href="/logout/">退出</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row" style="padding-top: 70px;">
+    <div class="col-md-11" align="left">
+        <ul>
+            <li>欢迎您，<a href="#">{{user}}</a></li>
+            <li><a href="/account">记一笔账</a></li>
+            <li><a href="/income_manage">家庭收入展示</a></li>
+            <li><a href="/debts_manage">家庭债务展示</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

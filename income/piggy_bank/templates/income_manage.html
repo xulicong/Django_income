@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <meta charset="UTF-8">
+    <title>家庭收入管理平台</title>
+</head>
+<body role="document">
+<!--导航栏-->
+<nav class="navbar navbar-expend-sm bg-dark navbar-dark fixed-top">
+    <div class="container">
+        <form method="post", action="/income_plot/">
+        {% csrf_token %}
+            <button class="bg-dark navbar-dark" style="color:white" id="submit" type="submit">图表</button>
+            <a>&nbsp;</a>
+            <select name="time">
+                <option value="All">All</option>
+                {% for year in years %}
+                <option value="{{ year.year }}">{{ year.year }}</option>
+                {%endfor%}
+            </select>
+        </form>
+        <ul class="nav justify-content-center"></ul>
+        <ul class="nav justify-content-center">
+            <li class="nav-link">
+                <a style="color:white" href="/">主页</a>
+            </li>
+            <li class="nav-link">
+                <a style="color:white" href="#">{{ user }}</a>
+            </li>
+            <li class="nav-link">
+                <a style="color:white" href="/logout/">退出</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--收支列表-->
+<div class="row" style="padding-top: 70px;">
+    <div class="col-md-11">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>年份</th>
+                <th>月份</th>
+                <th>上月余额</th>
+                <th>工资收入</th>
+                <th>其他收入</th>
+                <th>支出</th>
+                <th>预计余额</th>
+                <th>实际余额</th>
+                <th>余额误差</th>
+                <th>实际收入</th>
+                <th>创建时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for income in incomes %}
+            <tr>
+                <td>{{ income.Year.year }}</td>
+                <td>{{ income.monthly }}</td>
+                <td>{{ income.last_balance }}</td>
+                <td>
+                    <a style="color:green">{{ income.salary }}</a>
+                </td>
+                <td>
+                    <a style="color:green">{{ income.other_income }}</a>
+                </td>
+                <td>
+                    <a style="color:red">{{ income.payments }}</a>
+                </td>
+                <td>{{ income.expected_balance }}</td>
+                <td>{{ income.actual_balance }}</td>
+                <td>{{ income.balance_diff }}</td>
+                <td>{{ income.actual_income }}</td>
+                <td>{{ income.create_time }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <meta charset="UTF-8">
+    <title>家庭收入管理平台</title>
+</head>
+<body role="document">
+<!--导航栏-->
+<nav class="navbar navbar-expend-sm bg-dark navbar-dark fixed-top">
+    <div class="container">
+        <ul class="nav justify-content-center"></ul>
+        <ul class="nav justify-content-center">
+            <li class="nav-link">
+                <a style="color:white" href="/">主页</a>
+            </li>
+            <li class="nav-link">
+                <a style="color:white" href="#">{{ user }}</a>
+            </li>
+            <li class="nav-link">
+                <a style="color:white" href="/logout/">退出</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--bug列表-->
+<div class="row" style="padding-top: 70px;">
+    <div class="col-md-11">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>债权人</th>
+                <th>借款</th>
+                <th>总借款</th>
+                <th>还款</th>
+                <th>已还</th>
+                <th>剩余</th>
+                <th>记录时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for debt in debts %}
+            <tr>
+                <td>{{ debt.debtee }}</td>
+                <td>{{ debt.money }}</td>
+                <td><a style="color:red">{{ debt.all_money }}</a></td>
+                <td>{{ debt.paid }}</td>
+                <td><a style="color:green">{{ debt.all_paid }}</a> </td>
+                <td>{{ debt.remaining }}</td>
+                <td>{{ debt.create_time }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

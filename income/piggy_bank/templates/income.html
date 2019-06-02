@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>家庭收入管理平台</title>
+</head>
+<body>
+<div align="center">
+    <font>
+        <h1>家庭收支记录</h1>
+    </font>
+    <!--为了确保post方法能够包含next参数，能够顺利跳转，加入以下逻辑-->
+        <form method="post", action="/income/">
+         <!--加入防攻击令牌-->
+        {% csrf_token %}
+        <br><a>工资收入&nbsp;</a><input name="salary" type="salary">
+        <br><br><a>其他收入&nbsp;<input name="other_income" type="other_income">
+        <br><br><a>支出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="payments" type="payments">
+        <br><br><a>实际余额&nbsp;<input name="actual_balance" type="actual_balance">
+        <br><a style="color:red">{{ error }}</a>
+        <br><button style="width:235px;height:28px;" id="submit" type="submit">确认</button>
+        </form>
+</div>
+</body>
+</html>

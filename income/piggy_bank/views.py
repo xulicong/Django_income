@@ -37,7 +37,7 @@ def login(request):
         return render(request, "login.html", {"next": next_key}) # 如果包含next参数，则一直包含在url中
 
 @login_required(login_url="/login/")  # 装饰器，必须先登录才能跳转
-def word_cloud(request):
+def home(request):
     debts_list = DebtsDB.objects.all()
     income_list = IncomDB.objects.all()
     data = []
@@ -51,11 +51,7 @@ def word_cloud(request):
                   .add(series_name="词云图", data_pair=data)
                   )
     abs = os.path.dirname(__file__)
-    word_cloud.render(abs+"/templates/word_cloud.html")
-    return render(request, "word_cloud.html")
-
-@login_required(login_url="/login/")  # 装饰器，必须先登录才能跳转
-def home(request):
+    word_cloud.render(abs+"/static/word_cloud.html")
     return render(request, 'home.html')
 
 def logout(request):
@@ -196,10 +192,6 @@ def plot(request):
         line.set_series_opts(markpoint_opts=opts.MarkPointOpts(data=[min_point, max_point]))
         line.set_series_opts(markline_opts=opts.MarkLineOpts(data=[avg_line]))
     abs = os.path.dirname(__file__)
-    line.render(abs+"/templates/plot.html")
-    return render(request, "plot.html")
-
-@login_required(login_url="/login/")
-def income_plot(request):
+    line.render(abs+"/static/plot.html")
     return render(request, "income_plot.html")
 

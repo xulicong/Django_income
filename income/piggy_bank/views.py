@@ -5,6 +5,7 @@ from django.contrib import auth
 from piggy_bank.models import YearDB, IncomDB, DebtsDB
 from pyecharts.charts import Line
 from pyecharts import options as opts
+from pyecharts.charts import  WordCloud
 import time
 import numpy as np
 import os
@@ -33,6 +34,24 @@ def login(request):
         return render(request, "login.html")  #如果不包含next参数，则一直不包含
     else:
         return render(request, "login.html", {"next": next_key}) # 如果包含next参数，则一直包含在url中
+
+@login_required(login_url="/login/")  # 装饰器，必须先登录才能跳转
+def word_cloud(request):
+    debts_list = DebtsDB.objects.all()
+    income_list = IncomDB.objects.all()
+    data = []
+    for debt in debts_list:
+        if debt.money != 0:
+            data.append((debt.debtee, float(debt.money)))
+    for income in income_list:
+        data.append(("%s年%s"%(income.Year.year, income.monthly), float(income.actual_balance))) 
+    data = data*2
+    word_cloud = (WordCloud()
+                  .add(series_name="词云图", data_pair=data)
+                  )
+    abs = os.path.dirname(__file__)
+    word_cloud.render(abs+"/templates/word_cloud.html")
+    return render(request, "word_cloud.html")
 
 @login_required(login_url="/login/")  # 装饰器，必须先登录才能跳转
 def home(request):
@@ -182,3 +201,4 @@ def plot(request):
 @login_required(login_url="/login/")
 def income_plot(request):
     return render(request, "income_plot.html")
+

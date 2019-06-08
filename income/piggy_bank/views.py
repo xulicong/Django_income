@@ -14,6 +14,7 @@ import time
 import numpy as np
 import os
 import qrcode
+import qrcode.image.svg as svg
 
 # Create your views here.
 def login(request):
@@ -51,25 +52,24 @@ def home(request):
     for income in income_list:
         data.append(("%s年%s"%(income.Year.year, income.monthly), float(income.actual_balance))) 
     data = data*2
-    word_cloud = (WordCloud(global_opts.InitOpts(width="900px",height="300px", renderer=glbs.RenderType.SVG
-    ))
+    word_cloud = (WordCloud(global_opts.InitOpts(width="900px",height="300px", renderer=glbs.RenderType.SVG))
                   .add(series_name="词云图", data_pair=data)
                   )
     abs = os.path.dirname(__file__)
     word_cloud.render(abs+"/static/word_cloud.html")
-    #word_cloud.render(path=abs+"/static/word_cloud.png")
-    make_a_snapshot(abs+'/static/word_cloud.html', abs+'/static/word_cloud.svg')
+    #make_a_snapshot(abs+'/static/word_cloud.html', abs+'/static/word_cloud.svg')
     url = "https:////" + request.get_host()+request.get_full_path()
     qr = qrcode.QRCode(     
     version=1,     
     error_correction=qrcode.constants.ERROR_CORRECT_L,     
-    box_size=1,     
-    border=1, 
+    box_size=4,
+    border=1,
+    image_factory=svg.SvgImage
     ) 
     qr.add_data(url) 
     qr.make(fit=True)  
     img = qr.make_image()
-    img.save(abs+'/static/qrcode1.png')
+    img.save(abs+'/static/qrcode.svg')
     return render(request, 'home.html')
 
 def logout(request):

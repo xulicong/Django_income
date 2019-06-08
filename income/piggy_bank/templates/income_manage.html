@@ -14,7 +14,7 @@
         <ul class="nav justify-content-center">
         <form method="post", action="/plot/">
         {% csrf_token %}
-            <input name="plot" type="image" src="/static/plot.svg" class="btn"/>
+            <input name="plot" type="image" src="/static/plot.svg" class="btn" onmouseover="this.src='/static/plot1.svg'" onmouseout="this.src='/static/plot.svg'"/>
             <a>&nbsp;</a>
             <select name="time">
                 <option value="All">All</option>

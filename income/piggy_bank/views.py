@@ -6,10 +6,14 @@ from django.contrib import auth
 from piggy_bank.models import YearDB, IncomDB, DebtsDB
 from pyecharts.charts import Line
 from pyecharts import options as opts
+from pyecharts.options import global_options as global_opts
+from pyecharts import globals as glbs
 from pyecharts.charts import  WordCloud
+from pyecharts_snapshot.main import make_a_snapshot
 import time
 import numpy as np
 import os
+import qrcode
 
 # Create your views here.
 def login(request):
@@ -47,11 +51,25 @@ def home(request):
     for income in income_list:
         data.append(("%s年%s"%(income.Year.year, income.monthly), float(income.actual_balance))) 
     data = data*2
-    word_cloud = (WordCloud()
+    word_cloud = (WordCloud(global_opts.InitOpts(width="900px",height="300px", renderer=glbs.RenderType.SVG
+    ))
                   .add(series_name="词云图", data_pair=data)
                   )
     abs = os.path.dirname(__file__)
     word_cloud.render(abs+"/static/word_cloud.html")
+    #word_cloud.render(path=abs+"/static/word_cloud.png")
+    make_a_snapshot(abs+'/static/word_cloud.html', abs+'/static/word_cloud.svg')
+    url = "https:////" + request.get_host()+request.get_full_path()
+    qr = qrcode.QRCode(     
+    version=1,     
+    error_correction=qrcode.constants.ERROR_CORRECT_L,     
+    box_size=1,     
+    border=1, 
+    ) 
+    qr.add_data(url) 
+    qr.make(fit=True)  
+    img = qr.make_image()
+    img.save(abs+'/static/qrcode1.png')
     return render(request, 'home.html')
 
 def logout(request):

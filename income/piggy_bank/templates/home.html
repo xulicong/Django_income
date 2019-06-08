@@ -6,14 +6,55 @@
     {% bootstrap_javascript %}
     <meta charset="UTF-8">
     <title>家庭收入管理平台</title>
+    <style type="text/css">
+
+.hovergallery img{
+
+-webkit-transform:scale(0.8); /*Webkit: Scale down image to 0.8x original size*/
+
+-moz-transform:scale(0.8); /*Mozilla scale version*/
+
+-o-transform:scale(0.8); /*Opera scale version*/
+
+-webkit-transition-duration: 0.5s; /*Webkit: Animation duration*/
+
+-moz-transition-duration: 0.5s; /*Mozilla duration version*/
+
+-o-transition-duration: 0.5s; /*Opera duration version*/
+
+opacity: 0.7; /*initial opacity of images*/
+
+margin: 0 10px 5px 0; /*margin between images*/
+
+}
+
+.hovergallery img:hover{
+
+-webkit-transform:scale(5); /*Webkit: Scale up image to 1.2x original size*/
+
+-moz-transform:scale(5); /*Mozilla scale version*/
+
+-o-transform:scale(5); /*Opera scale version*/
+
+box-shadow:0px 0px 30px gray; /*CSS3 shadow: 30px blurred shadow all around image*/
+
+-webkit-box-shadow:0px 0px 30px gray; /*Safari shadow version*/
+
+-moz-box-shadow:0px 0px 30px gray; /*Mozilla shadow version*/
+
+opacity: 1;
+
+}
+
+</style>
 </head>
 <body role="document">
 <!--导航栏-->
 <nav class="navbar navbar-expend-sm bg-dark navbar-dark fixed-top">
     <div class="container">
         <ul class="nav justify-content">
-            <li>
-                <img src="/static/money.svg">
+            <li class="nav-link">
+                <img src="/static/money.svg"/>
             </li>
         </ul>
         <ul class="nav justify-content">
@@ -28,12 +69,13 @@
 </nav>
 
 <div class="row" style="padding-top: 70px;">
-    <div class="col-md-11" align="center">
+    <div class="col-md-11 hovergallery" align="center">
         <ul style="list-style-type:none">
             <li>欢迎您，<a href="#">{{user}}</a></li>
             <li><a href="/account">记一笔账</a></li>
             <li><a href="/income_manage">家庭收入展示</a></li>
             <li><a href="/debts_manage">家庭债务展示</a></li>
+            <li><a>&nbsp;&nbsp;</a><img src="/static/qrcode1.png"/></li>
         </ul>
     </div>
     <div class="col-md-11" align="center">

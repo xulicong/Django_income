@@ -212,4 +212,3 @@ def plot(request):
     abs = os.path.dirname(__file__)
     line.render(abs+"/static/plot.html")
     return render(request, "income_plot.html")
-

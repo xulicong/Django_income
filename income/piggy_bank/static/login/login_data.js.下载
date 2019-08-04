@@ -1,0 +1,1 @@
+var portal_url='/sites/wafkzg_draft/'; var c_data=c_data||{}; c_data.animations = []; c_data.comps = []; c_data.timelines = [{"iType": 0, "element_id": "section_b5e1e367124b9cca", "data": {"type": 0, "t": {"rv": 0, "rp": 0, "wa": 0, "de": 0, "st": 1, "du": 1, "es": 0}, "d": {}}, "id": "M_f588cb2b52061a798c8f86bae69783f2", "animations": []}]; c_data.actions = []

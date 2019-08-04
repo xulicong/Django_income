@@ -23,7 +23,6 @@ urlpatterns = [
     path('', views.home),
     path('logout/', views.logout),
     path('income_manage/', views.income_manage),
-    path('account/', views.account),
     path('income/', views.income),
     path('debts/', views.debts),
     path('debts_manage/', views.debts_manage),

@@ -1,0 +1,201 @@
+﻿(function () {
+  var _script = document.createElement("script");
+  _script.src = "https://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.client.min.js";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(_script, s);
+})();
+
+var objvalue = "";
+//把执行方法绑定到DOM的oninput事件上
+function yzkinput(obj) {
+  if (typeof (wordchanged) === "function") { //如果有文字输入回调
+    obj.oninput = function () {
+      yzkword(this, wordchanged);
+    }
+  } else {
+    obj.oninput = function () {
+      yzkword(this, null);
+    }
+  }
+}
+//获取指定DOM的值
+function getyzk(obj) {
+  if (obj.value) {
+    return obj.value;
+  } else if (obj.innerContent) {
+    return obj.innerContent;
+  } else if (obj.textContent) {
+    return obj.textContent;
+  } else {
+    return obj.innerText;
+  }
+}
+//文字改变时调用的方法
+function changeword(obj) {
+
+  if (typeof (wordchanged) === "function") { //如果有文字输入回调
+    yzkword(obj, wordchanged);
+  } else {
+    yzkword(obj, null);
+  }
+}
+
+//即时输入时所执行的程序
+function yzkword(obj, wordchanged) {
+  var fonts = getyzk(obj); //文本框当前的值        
+  if (objvalue != fonts) { //防止重复oninput
+    var ataccessKey = obj.attributes['accessKey'].nodeValue;
+    objvalue = fonts;
+
+    var entity = {
+      AccessKey: ataccessKey, //AccessKey即是字体的代码，需要登录有字库后，在目标字体的使用页面中获取。
+      Content: fonts, // Content即时当前需要用到的文字内容
+      Tag: ".youziku-" + ataccessKey
+    };
+    $youzikuClient.getFontFace(entity, function (result) {
+      (wordchanged && typeof (wordchanged) === "function") && wordchanged(obj); //置空也需要回调
+    });
+  }
+}
+
+var oldonload = window.onload;
+if (typeof oldonload != 'function') {
+  window.onload = function () {
+    youzikujusttime();
+  };
+} else {
+  window.onload = function () {
+    oldonload();
+    youzikujusttime();
+  }
+}
+
+
+function youzikujusttime() {
+  var objs = {};
+  objs = yzkgetElementsByClass("youziku");
+  var accessKey = "";
+
+
+
+  for (var i in objs) {
+    var obj = objs[i];
+    accessKey = obj.className.substr(obj.className.indexOf("youziku") + 8, 32);
+    obj.setAttribute("accessKey", accessKey);
+    var entity = {
+      AccessKey: accessKey, //AccessKey即是字体的代码，需要登录有字库后，在目标字体的使用页面中获取。
+      Content: getyzk(obj), // Content即时当前需要用到的文字内容
+      Tag: ".youziku-" + accessKey
+    };
+    $youzikuClient.getFontFace(entity, function (result) {
+
+      //(youzikuloaded && typeof (youzikuloaded) === "function") && youzikuloaded(accessKey);//置空也需要回调
+    });
+
+    yzkinput(obj); //把执行方法绑定到DOM的oninput事件上
+  }
+
+}
+
+function yzksc(obj, newaccessKey) {
+  var newclassName = newaccessKey == "" ? "" : "youziku-" + newaccessKey;
+
+  var className = obj.className;
+
+  if (className === 'undefined') {
+    className = newclassName;
+  } else {
+    if (hasClass(className, "youziku")) {
+      var oldclass = className.substr(className.indexOf("youziku"), 40);
+      className = className.replace(oldclass, newclassName);
+
+    } else {
+      className = newclassName + " " + className;
+
+    }
+  }
+  obj.setAttribute("class", className);
+  obj.setAttribute("accessKey", newaccessKey);
+}
+
+function objchangefont(scobj, newaccessKey, changecallback) {
+
+  var obj = typeof scobj === 'string' ? document.querySelector(scobj) : scobj;
+  console.log(obj);
+  if (obj != null) {
+    if (newaccessKey != null && newaccessKey != "") {
+      yzksc(obj, newaccessKey);
+      if (obj.oninput == null)
+        yzkinput(obj);
+
+      var entity = {
+        AccessKey: newaccessKey, //AccessKey即是字体的代码，需要登录有字库后，在目标字体的使用页面中获取。
+        Content: getyzk(obj), // Content即时当前需要用到的文字内容
+        Tag: ".youziku-" + newaccessKey
+      };
+      $youzikuClient.getFontFace(entity, function (result) {
+        (changecallback && typeof (changecallback) === "function") && changecallback(newaccessKey); //置空也需要回调
+
+      });
+    } else {
+      yzksc(obj, "");
+      obj.oninput = null;
+      (changecallback && typeof (changecallback) === "function") && changecallback(obj); //置空也需要回调
+    }
+
+  }
+}
+//根据name获取DOM,批量
+function changefont(EleName, newaccessKey, changecallback) {
+  //获取name指定的标签，将class替换成新的class    
+
+  var listElm = document.getElementsByName(EleName);
+
+  if (newaccessKey != null && newaccessKey != "") {
+    var strcontent = "";
+    for (var i = 0; i < listElm.length; i++) {
+      strcontent = strcontent + getyzk(listElm[i]);
+      yzksc(listElm[i], newaccessKey); //设置class
+      if (listElm[i].oninput == null)
+        yzkinput(listElm[i]); //绑定oninput事件   
+    }
+
+    var entity = {
+      AccessKey: newaccessKey, //AccessKey即是字体的代码，需要登录有字库后，在目标字体的使用页面中获取。
+      Content: strcontent, // Content即时当前需要用到的文字内容
+      Tag: ".youziku-" + newaccessKey
+    };
+    $youzikuClient.getFontFace(entity, function (result) {
+      (changecallback && typeof (changecallback) === "function") && changecallback(newaccessKey); //置空也需要回调
+    });
+  } else {
+    for (var i = 0; i < listElm.length; i++) {
+      yzksc(listElm[i], "");
+      listElm[i].oninput = null;
+    }
+    (changecallback && typeof (changecallback) === "function") && changecallback(newaccessKey); //置空也需要回调
+  }
+
+}
+
+function yzkgetElementsByClass(classN) {
+  var elements = [];
+  var listElm = document.all;
+  for (var i = 0; i < listElm.length; i++) {
+
+    if (listElm[i].className === 'undefined') {
+      continue;
+    }
+    if (hasClass(listElm[i].className, classN))
+      elements.push(listElm[i]);
+  }
+
+  return elements;
+}
+
+function hasClass(a, sub) {
+  if ((a + "").indexOf(sub) >= 0) {
+    return true;
+  }
+  return false;
+}

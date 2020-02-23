@@ -251,7 +251,6 @@ def select_plot(request):
             balance_list.append(round(float(each.actual_balance), 2))
             salary_list.append(round(float(each.salary), 2))
             other_income_list.append(round(float(each.other_income), 2))
-            income_list = [round(x+y, 2) for x in salary_list for y in other_income_list]
             pay_list.append(float(each.payments))
             month_list.append("%s年%s"%(each.Year.year, each.monthly))
     else:
@@ -260,9 +259,9 @@ def select_plot(request):
                 balance_list.append(round(float(each.actual_balance), 2))
                 salary_list.append(round(float(each.salary), 2))
                 other_income_list.append(round(float(each.other_income), 2))
-                income_list = [round(x+y, 2) for x in salary_list for y in other_income_list]
                 pay_list.append(float(each.payments))
                 month_list.append(each.monthly)
+    income_list = [x+other_income_list[idx] for idx, x in enumerate(salary_list)]
     if choice == "储蓄":
         plot_line_chart(month_list, balance_list, "每月实际存款", "储蓄-折线图")
         return render(request, "income_plot.html", {"choice_list": ["储蓄", "收入", "支出"], "web_choice": "储蓄"})

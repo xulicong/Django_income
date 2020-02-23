@@ -27,4 +27,5 @@ urlpatterns = [
     path('debts/', views.debts),
     path('debts_manage/', views.debts_manage),
     path('plot/', views.plot),
+    path('select_plot/', views.select_plot)
 ]

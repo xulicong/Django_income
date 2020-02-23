@@ -16,7 +16,7 @@
         {% csrf_token %}
             <input name="plot" type="image" src="/static/plot.svg" class="btn" onmouseover="this.src='/static/plot1.svg'" onmouseout="this.src='/static/plot.svg'"/>
             <a>&nbsp;</a>
-            <select name="time">
+            <select name="time" class="btn">
                 <option value="All">All</option>
                 {% for year in years %}
                 <option value="{{ year.year }}">{{ year.year }}</option>

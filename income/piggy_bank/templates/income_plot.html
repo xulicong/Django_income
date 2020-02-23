@@ -12,9 +12,20 @@
 <nav class="navbar navbar-expend-sm bg-dark navbar-dark fixed-top">
     <div class="container">
         <ul class="nav justify-content">
-            <li>
-                <img src="/static/plot.svg">
-            </li>
+            <form method="post", action="/select_plot/">
+            {% csrf_token %}
+            <input name="plot" type="image" src="/static/plot.svg" class="btn" onmouseover="this.src='/static/plot1.svg'" onmouseout="this.src='/static/plot.svg'"/>
+            <a>&nbsp;&nbsp;&nbsp;</a>
+            <select name="plots" class="btn">
+                {% for choice in choice_list %}
+                    {% if web_choice == choice %}
+                        <option value="{{ choice }}" selected>{{ choice }}</option>
+                    {% else %}
+                    <option value="{{ choice }}">{{ choice }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+             </form>
         </ul>
         <ul class="nav justify-content-center">
             <li class="nav-link">

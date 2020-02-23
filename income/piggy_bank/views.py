@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from piggy_bank.models import YearDB, IncomDB, DebtsDB
-from pyecharts.charts import Line
+from pyecharts.charts import Line, Bar
 from pyecharts import options as opts
 from pyecharts.options import global_options as global_opts
 from pyecharts import globals as glbs
@@ -15,6 +15,9 @@ import numpy as np
 import os
 import qrcode
 import qrcode.image.svg as svg
+
+
+year_str = "ALL"
 
 # Create your views here.
 def login(request):
@@ -145,17 +148,13 @@ def debts(request):
         debtee = request.POST.get("debtee")
         print(debtee)
         debt_list = DebtsDB.objects.all()
+        all_money = 0
+        all_paid = 0
         if debt_list:
             for each in debt_list:
                 if each.debtee == debtee:
                     all_money = float(each.all_money)
                     all_paid = float(each.all_paid)
-                else:
-                    all_money = 0
-                    all_paid = 0
-        else:
-            all_money = 0
-            all_paid = 0
         money = float(request.POST.get("money"))
         all_money += money
         paid = float(request.POST.get("paid"))
@@ -176,10 +175,53 @@ def debts_manage(request):
     debt_list = DebtsDB.objects.all()
     return render(request, "debts_manage.html", {"debts": debt_list})
 
+def plot_line_chart(xaxis, yaxis, y_title, title):
+    line = (
+        Line()
+        .add_xaxis(xaxis)
+        .add_yaxis(y_title, yaxis)
+        .set_global_opts(title_opts=opts.TitleOpts(title=title, subtitle=year_str),
+                         xaxis_opts=opts.AxisOpts(axislabel_opts=opts.LabelOpts(rotate="45")),
+                         toolbox_opts=opts.ToolboxOpts(feature=opts.global_options.ToolBoxFeatureOpts()))
+    )
+    if len(yaxis) >= 3:
+        max_x, max_y = yaxis.index(max(yaxis)), max(yaxis)
+        min_x, min_y = yaxis.index(min(yaxis)), min(yaxis)
+        avg = np.mean(yaxis)
+        max_point = opts.series_options.MarkPointItem(name="Maximum", coord=(max_x, max_y), value=max_y)
+        min_point = opts.series_options.MarkPointItem(name="Maximum", coord=(min_x, min_y), value=min_y)
+        avg_line = opts.series_options.MarkLineItem(name="mean_Value", y=avg)
+        line.set_series_opts(markpoint_opts=opts.MarkPointOpts(data=[min_point, max_point]))
+        line.set_series_opts(markline_opts=opts.MarkLineOpts(data=[avg_line]))
+    abs = os.path.dirname(__file__)
+    line.render(abs+"/static/plot.html")
+
+def plot_bar_chart(xaxis, yaxis, y_title, title, theme):
+    bar = (
+        Bar()
+        .add_xaxis(xaxis)
+        .add_yaxis(y_title, yaxis, itemstyle_opts=opts.ItemStyleOpts(theme))
+        .set_global_opts(title_opts=opts.TitleOpts(title=title, subtitle=year_str),
+                         xaxis_opts=opts.AxisOpts(axislabel_opts=opts.LabelOpts(rotate="45")),
+                         toolbox_opts=opts.ToolboxOpts(feature=opts.global_options.ToolBoxFeatureOpts()))
+    )
+    if len(yaxis) >= 3:
+        max_x, max_y = yaxis.index(max(yaxis)), max(yaxis)
+        min_x, min_y = yaxis.index(min(yaxis)), min(yaxis)
+        avg = np.mean(yaxis)
+        max_point = opts.series_options.MarkPointItem(name="Maximum", coord=(max_x, max_y), value=max_y)
+        min_point = opts.series_options.MarkPointItem(name="Maximum", coord=(min_x, min_y), value=min_y)
+        avg_line = opts.series_options.MarkLineItem(name="mean_Value", y=avg)
+        bar.set_series_opts(markline_opts=opts.MarkLineOpts(data=[avg_line]))
+    abs = os.path.dirname(__file__)
+    bar.render(abs+"/static/plot.html")
+
+
 @login_required(login_url="/login/")
 def plot(request):
     income_list = []
     month_list = []
+    global year_str
     year_str = request.POST.get("time", "All")
     print(year_str)
     if year_str == "All":
@@ -191,24 +233,42 @@ def plot(request):
             if each.Year.year == year_str:
                 income_list.append(float(each.actual_balance))
                 month_list.append(each.monthly)
+    plot_line_chart(month_list, income_list, "每月实际存款", "储蓄-折线图")
+    return render(request, "income_plot.html", {"choice_list": ["储蓄", "收入", "支出"], "web_choice": "储蓄"})
 
-    line = (
-        Line()
-        .add_xaxis(month_list)
-        .add_yaxis("每月实际存款", income_list)
-        .set_global_opts(title_opts=opts.TitleOpts(title="储蓄-折线图", subtitle=year_str),
-                         xaxis_opts=opts.AxisOpts(axislabel_opts=opts.LabelOpts(rotate="60")),
-                         toolbox_opts=opts.ToolboxOpts(feature=opts.global_options.ToolBoxFeatureOpts()))
-    )
-    if len(income_list) >= 3:
-        max_x, max_y = income_list.index(max(income_list)), max(income_list)
-        min_x, min_y = income_list.index(min(income_list)), min(income_list)
-        avg = np.mean(income_list)
-        max_point = opts.series_options.MarkPointItem(name="Maximum", coord=(max_x, max_y), value=max_y)
-        min_point = opts.series_options.MarkPointItem(name="Maximum", coord=(min_x, min_y), value=min_y)
-        avg_line = opts.series_options.MarkLineItem(name="mean_Value", y=avg)
-        line.set_series_opts(markpoint_opts=opts.MarkPointOpts(data=[min_point, max_point]))
-        line.set_series_opts(markline_opts=opts.MarkLineOpts(data=[avg_line]))
-    abs = os.path.dirname(__file__)
-    line.render(abs+"/static/plot.html")
-    return render(request, "income_plot.html")
+@login_required(login_url="/login/")
+def select_plot(request):
+    salary_list = []
+    other_income_list = []
+    balance_list = []
+    pay_list = []
+    month_list = []
+    choice = request.POST.get("plots")
+    print(choice)
+    global year_str
+    if year_str == "All":
+        for each in IncomDB.objects.all():
+            balance_list.append(round(float(each.actual_balance), 2))
+            salary_list.append(round(float(each.salary), 2))
+            other_income_list.append(round(float(each.other_income), 2))
+            income_list = [round(x+y, 2) for x in salary_list for y in other_income_list]
+            pay_list.append(float(each.payments))
+            month_list.append("%s年%s"%(each.Year.year, each.monthly))
+    else:
+        for each in IncomDB.objects.all():
+            if each.Year.year == year_str:
+                balance_list.append(round(float(each.actual_balance), 2))
+                salary_list.append(round(float(each.salary), 2))
+                other_income_list.append(round(float(each.other_income), 2))
+                income_list = [round(x+y, 2) for x in salary_list for y in other_income_list]
+                pay_list.append(float(each.payments))
+                month_list.append(each.monthly)
+    if choice == "储蓄":
+        plot_line_chart(month_list, balance_list, "每月实际存款", "储蓄-折线图")
+        return render(request, "income_plot.html", {"choice_list": ["储蓄", "收入", "支出"], "web_choice": "储蓄"})
+    elif choice == "收入":
+        plot_bar_chart(month_list, income_list, "每月实际收入", "收入-柱形图", "#33cc33")
+        return render(request, "income_plot.html", {"choice_list": ["储蓄", "收入", "支出"], "web_choice": "收入"})
+    elif choice == "支出":
+        plot_bar_chart(month_list, pay_list, "每月实际支出", "支出-柱形图", None)
+        return render(request, "income_plot.html", {"choice_list": ["储蓄", "收入", "支出"], "web_choice": "支出"})

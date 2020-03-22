@@ -7,11 +7,11 @@
 
 </head>
 <body>
-    <div id="2d77b9a3e3e14d4584c5139f9c4d2f6f" style="width:900px; height:500px;"></div>
+    <div id="99a43039e47c49b8a08618e21db67cb9" style="width:900px; height:500px;"></div>
     <script>
-        var chart_2d77b9a3e3e14d4584c5139f9c4d2f6f = echarts.init(
-            document.getElementById('2d77b9a3e3e14d4584c5139f9c4d2f6f'), 'white', {renderer: 'canvas'});
-        var option_2d77b9a3e3e14d4584c5139f9c4d2f6f = {
+        var chart_99a43039e47c49b8a08618e21db67cb9 = echarts.init(
+            document.getElementById('99a43039e47c49b8a08618e21db67cb9'), 'white', {renderer: 'canvas'});
+        var option_99a43039e47c49b8a08618e21db67cb9 = {
     "color": [
         "#c23531",
         "#2f4554",
@@ -40,57 +40,45 @@
     ],
     "series": [
         {
-            "type": "bar",
-            "name": "\u6bcf\u6708\u5b9e\u9645\u652f\u51fa",
+            "type": "line",
+            "name": "\u6bcf\u6708\u5b9e\u9645\u5b58\u6b3e",
+            "symbolSize": 4,
+            "showSymbol": true,
+            "smooth": false,
+            "step": false,
             "data": [
-                1927.74,
-                429904.93,
-                5958.39,
-                7537.28,
-                7394.48,
-                8232.42,
-                7853.8,
-                8512.7,
-                8700.81,
-                10340.67
+                [
+                    "1\u6708",
+                    22898.25
+                ],
+                [
+                    "2\u6708",
+                    28738.45
+                ]
             ],
-            "barCategoryGap": "20%",
             "label": {
                 "show": true,
                 "position": "top",
                 "fontSize": 12
             },
-            "markLine": {
-                "silent": false,
-                "precision": 2,
-                "label": {
-                    "show": true,
-                    "position": "top",
-                    "fontSize": 12
-                },
-                "data": [
-                    {
-                        "name": "mean_Value",
-                        "yAxis": 49636.322
-                    }
-                ]
+            "lineStyle": {
+                "width": 1,
+                "opacity": 1,
+                "curveness": 0,
+                "type": "solid"
             },
-            "itemStyle": {},
-            "rippleEffect": {
-                "show": true,
-                "brushType": "stroke",
-                "scale": 2.5,
-                "period": 4
+            "areaStyle": {
+                "opacity": 0
             }
         }
     ],
     "legend": [
         {
             "data": [
-                "\u6bcf\u6708\u5b9e\u9645\u652f\u51fa"
+                "\u6bcf\u6708\u5b9e\u9645\u5b58\u6b3e"
             ],
             "selected": {
-                "\u6bcf\u6708\u5b9e\u9645\u652f\u51fa": true
+                "\u6bcf\u6708\u5b9e\u9645\u5b58\u6b3e": true
             },
             "show": true
         }
@@ -150,23 +138,15 @@
                 }
             },
             "data": [
-                "2019\u5e744\u6708",
-                "2019\u5e745\u6708",
-                "2019\u5e746\u6708",
-                "2019\u5e747\u6708",
-                "2019\u5e748\u6708",
-                "2019\u5e749\u6708",
-                "2019\u5e7410\u6708",
-                "2019\u5e7411\u6708",
-                "2019\u5e7412\u6708",
-                "2020\u5e741\u6708"
+                "1\u6708",
+                "2\u6708"
             ]
         }
     ],
     "title": [
         {
-            "text": "\u652f\u51fa-\u67f1\u5f62\u56fe",
-            "subtext": "All"
+            "text": "\u50a8\u84c4-\u6298\u7ebf\u56fe",
+            "subtext": "2020"
         }
     ],
     "toolbox": {
@@ -200,7 +180,7 @@
         }
     }
 };
-        chart_2d77b9a3e3e14d4584c5139f9c4d2f6f.setOption(option_2d77b9a3e3e14d4584c5139f9c4d2f6f);
+        chart_99a43039e47c49b8a08618e21db67cb9.setOption(option_99a43039e47c49b8a08618e21db67cb9);
     </script>
 </body>
 </html>

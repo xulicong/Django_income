@@ -9,12 +9,10 @@ from pyecharts import options as opts
 from pyecharts.options import global_options as global_opts
 from pyecharts import globals as glbs
 from pyecharts.charts import  WordCloud
-from pyecharts_snapshot.main import make_a_snapshot
+#from pyecharts_snapshot.main import make_a_snapshot
 import time
 import numpy as np
 import os
-import qrcode
-import qrcode.image.svg as svg
 
 
 year_str = "ALL"
@@ -62,17 +60,17 @@ def home(request):
     word_cloud.render(abs+"/static/word_cloud.html")
     #make_a_snapshot(abs+'/static/word_cloud.html', abs+'/static/word_cloud.svg')
     url = "https:////" + request.get_host()+request.get_full_path()
-    qr = qrcode.QRCode(     
-    version=1,     
-    error_correction=qrcode.constants.ERROR_CORRECT_L,     
-    box_size=4,
-    border=1,
-    image_factory=svg.SvgImage
-    ) 
-    qr.add_data(url) 
-    qr.make(fit=True)  
-    img = qr.make_image()
-    img.save(abs+'/static/qrcode.svg')
+    # qr = qrcode.QRCode(
+    # version=1,
+    # error_correction=qrcode.constants.ERROR_CORRECT_L,
+    # box_size=4,
+    # border=1,
+    # image_factory=svg.SvgImage
+    # )
+    # qr.add_data(url)
+    # qr.make(fit=True)
+    # img = qr.make_image()
+    # img.save(abs+'/static/qrcode.svg')
     return render(request, 'home.html')
 
 def logout(request):

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>家庭收入管理平台</title>
+</head>
+<body>
+<div align="center">
+    <font>
+        <h1>资金池</h1>
+    </font>
+    <!--为了确保post方法能够包含next参数，能够顺利跳转，加入以下逻辑-->
+        <form method="post", action="/fund/">
+         <!--加入防攻击令牌-->
+        {% csrf_token %}
+        <br><a>现金池&nbsp;</a><input name="cash_pool">
+        <br><br><a>目标池&nbsp;</a><input name="goal_pool">
+        <br><br><a>保险池 </a><input name="insurance_pool">
+        <br><br><a>金鹅池&nbsp;</a><input name="invest_pool">
+        <br><br><a>投资回报&nbsp;</a><input name="invest_income">
+        <br><a style="color:red">{{ error }}</a>
+        <br><button style="width:235px;height:28px;" id="submit" type="submit">确认</button>
+        </form>
+</div>
+</body>
+</html>

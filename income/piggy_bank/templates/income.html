@@ -14,9 +14,9 @@
          <!--加入防攻击令牌-->
         {% csrf_token %}
         <br><a>工资收入&nbsp;</a><input name="salary" type="salary">
-        <br><br><a>其他收入&nbsp;<input name="other_income" type="other_income">
-        <br><br><a>支出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="payments" type="payments">
-        <br><br><a>实际余额&nbsp;<input name="actual_balance" type="actual_balance">
+        <br><br><a>其他收入&nbsp;</a><input name="other_income" type="other_income">
+        <br><br><a>支出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><input name="payments" type="payments">
+        <br><br><a>实际余额&nbsp;</a><input name="actual_balance" type="actual_balance">
         <br><a style="color:red">{{ error }}</a>
         <br><button style="width:235px;height:28px;" id="submit" type="submit">确认</button>
         </form>

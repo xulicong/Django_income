@@ -1,18 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from piggy_bank.models import YearDB, IncomDB, DebtsDB
-from pyecharts.charts import Line, Bar
-from pyecharts import options as opts
+from piggy_bank.models import YearDB, IncomDB, DebtsDB, FundPoolDB
 from pyecharts.options import global_options as global_opts
 from pyecharts import globals as glbs
 from pyecharts.charts import  WordCloud
-#from pyecharts_snapshot.main import make_a_snapshot
 import time
 import numpy as np
 import os
+from pyecharts.charts import Bar, Grid, Liquid, Page, Pie, Line, Bar3D
+from pyecharts import options as opts
+from pyecharts.commons.utils import JsCode
+from pyecharts.globals import ThemeType
 
 
 year_str = "ALL"
@@ -168,10 +168,83 @@ def debts(request):
         return render(request, "home.html")
     return render(request, "debts.html")
 
+
+@login_required(login_url="/login/")
+def fund(request):
+    if request.POST:
+        year = ""
+        year_str = str(time.localtime().tm_year)
+        year_list = YearDB.objects.all()
+        for each in year_list:
+            if each.year == year_str:
+                year = each.id
+                break
+        else:
+            yeardb = YearDB(year=year_str)
+            yeardb.save()
+            year_list = YearDB.objects.all()
+            for each in year_list:
+                if each.year == year_str:
+                    year = each.id
+                    break
+        monthly = "%s月" % (time.localtime().tm_mon)
+        try:
+            cash_pool = float(request.POST.get("cash_pool"))
+            goal_pool = float(request.POST.get("goal_pool"))
+            insurance_pool = float(request.POST.get("insurance_pool"))
+            invest_pool = float(request.POST.get("invest_pool"))
+            invest_income = float(request.POST.get("invest_income"))
+        except Exception as e:
+            print(e)
+            return render(request, "fund.html", {"error": e})
+        data = FundPoolDB(Year_id=year,
+                       monthly=monthly,
+                       cash_pool=cash_pool,
+                       goal_pool=goal_pool,
+                       insurance_pool=insurance_pool,
+                       invest_pool=invest_pool,
+                       invest_income=invest_income
+                       )
+        data.save()
+        return render(request, "home.html")
+    return render(request, "fund.html")
+
+
 @login_required(login_url="/login/")
 def debts_manage(request):
     debt_list = DebtsDB.objects.all()
     return render(request, "debts_manage.html", {"debts": debt_list})
+
+
+@login_required(login_url="/login/")
+def debts_plot(request):
+    debtee_list = []
+    all_money_list = []
+    all_paid_list = []
+    debt_list = DebtsDB.objects.all()
+    for debt in debt_list:
+        if debt.debtee not in debtee_list:
+            debtee_list.append(debt.debtee)
+            all_money_list.append(debt.all_money)
+            all_paid_list.append(debt.all_paid)
+        else:
+            idx = debtee_list.index(debt.debtee)
+            if debt.all_money:
+                all_money_list[idx] = debt.all_money
+            if debt.all_paid:
+                all_paid_list[idx] = debt.all_paid
+    bar_stack = (
+        Bar()
+            .add_xaxis(debtee_list)
+            .add_yaxis("欠债", all_money_list, stack="stack1")
+            .add_yaxis("偿还", all_paid_list, stack="stack1")
+            .set_series_opts(label_opts=opts.LabelOpts(is_show=False))
+            .set_global_opts(title_opts=opts.TitleOpts(title="欠债&偿还"))
+    )
+    abs = os.path.dirname(__file__)
+    bar_stack.render(abs + "/static/debt.html")
+    return render(request, "debts_plot.html")
+
 
 def plot_line_chart(xaxis, yaxis, y_title, title):
     line = (
@@ -269,3 +342,139 @@ def select_plot(request):
     elif choice == "支出":
         plot_bar_chart(month_list, pay_list, "每月实际支出", "支出-柱形图", None)
         return render(request, "income_plot.html", {"choice_list": ["储蓄", "收入", "支出"], "web_choice": "支出"})
+    elif choice == "分布":
+        plot_asset_distribution()
+        return render(request, "analysis_plot.html", {"choice_list": ["分布", "分析"], "web_choice": "分布"})
+    elif choice == "分析":
+        plot_asset_analysis()
+        return render(request, "analysis_plot.html", {"choice_list": ["分布", "分析"], "web_choice": "分析"})
+
+
+def plot_asset_distribution():
+    months = [
+        "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"
+    ]
+    years = [str(x.year) for x in YearDB.objects.all()]
+    years = years[::-1]
+    data = []
+    for idx1, month in enumerate(months):
+        for idx2, year in enumerate(years):
+            data.append([idx1, idx2, 0])
+    for each in IncomDB.objects.all():
+        each_year = each.Year.year
+        each_month = each.monthly
+        if each_year in years and each_month in months:
+            idx = years.index(each_year) + months.index(each_month) * len(years)
+            data[idx] = [months.index(each_month), years.index(each_year), float(each.actual_balance)]
+
+    bar_3d = (
+        Bar3D(init_opts=opts.InitOpts(width="1400px", height="700px"))
+            .add(
+            series_name="存款",
+            data=data,
+            xaxis3d_opts=opts.Axis3DOpts(type_="category", data=months),
+            yaxis3d_opts=opts.Axis3DOpts(type_="category", data=years),
+            zaxis3d_opts=opts.Axis3DOpts(type_="value"),
+        )
+            .set_global_opts(
+            visualmap_opts=opts.VisualMapOpts(
+                max_=100000,
+                range_color=[
+                    "#313695",
+                    "#4575b4",
+                    "#74add1",
+                    "#abd9e9",
+                    "#e0f3f8",
+                    "#ffffbf",
+                    "#fee090",
+                    "#fdae61",
+                    "#f46d43",
+                    "#d73027",
+                    "#a50026",
+                ]
+            )
+        )
+    )
+    abs = os.path.dirname(__file__)
+    bar_3d.render(abs + "/static/analysis.html")
+
+
+def plot_asset_analysis():
+    last_fund = FundPoolDB.objects.last()
+    cash_pool = last_fund.cash_pool
+    goal_pool = last_fund.goal_pool
+    insurance_pool = last_fund.insurance_pool
+    invest_pool = last_fund.invest_pool
+    invest_income = last_fund.invest_income
+    last_income = IncomDB.objects.last()
+    payments = last_income.payments
+    wealth_freedom = float(invest_income)/float(payments)
+    liquid = (
+        Liquid()
+            .add("lq", [wealth_freedom, wealth_freedom+0.1, wealth_freedom+0.2,], is_outline_show=False,
+                 label_opts=opts.LabelOpts(
+                     font_size=50,
+                     formatter=JsCode(
+                         """function (param) {
+                                 return (Math.floor(param.value * 10000) / 100) + '%';
+                             }"""
+                     ),
+                     position="inside",
+                 )
+                 )
+            .set_global_opts(title_opts=opts.TitleOpts(title="财富自由度"))
+
+    )
+
+    pie = (
+        Pie({"theme": ThemeType.MACARONS})
+            .add(
+            "",
+            [["现金池", cash_pool], ["目标池", goal_pool], ["保险池", insurance_pool], ["金鹅池", invest_pool]],
+            radius=["40%", "55%"],
+            label_opts=opts.LabelOpts(
+                position="outside",
+                formatter="  {b|{b}: }{c}  {per|{d}%}  ",
+                background_color="#eee",
+                border_color="#aaa",
+                border_width=1,
+                border_radius=4,
+                rich={
+                    "a": {"color": "#999", "lineHeight": 22, "align": "center"},
+                    "abg": {
+                        "backgroundColor": "#e3e3e3",
+                        "width": "100%",
+                        "align": "right",
+                        "height": 22,
+                        "borderRadius": [4, 4, 0, 0],
+                    },
+                    "hr": {
+                        "borderColor": "#aaa",
+                        "width": "100%",
+                        "borderWidth": 0.5,
+                        "height": 0,
+                    },
+                    "b": {"fontSize": 16, "lineHeight": 33},
+                    "per": {
+                        "color": "#eee",
+                        "backgroundColor": "#334455",
+                        "padding": [2, 4],
+                        "borderRadius": 2,
+                    },
+                },
+            ),
+        )
+            .set_global_opts(title_opts=opts.TitleOpts(title="资金池"))
+    )
+    page = Page(layout=Page.DraggablePageLayout)
+    page.add(
+        liquid,
+        pie
+    )
+    abs = os.path.dirname(__file__)
+    page.render(abs + "/static/analysis.html")
+
+@login_required(login_url="/login/")
+def analysis(request):
+    plot_asset_distribution()
+    return render(request, "analysis_plot.html", {"choice_list": ["分布", "分析"], "web_choice": "分布"})

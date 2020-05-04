@@ -52,3 +52,26 @@ class DebtsDB(models.Model):
     def __str__(self):
         return self.debtee
 
+class FundPoolDB(models.Model):
+    MONTH_CHOICE = (
+    ("1月", "1月"), ("2月", "2月"), ("3月", "3月"), ("4月", "4月"), ("5月", "5月"),
+    ("6月", "6月"), ("7月", "7月"), ("8月", "8月"), ("9月", "9月"), ("10月", "10月"),
+    ("11月", "11月"), ("12月", "12月"),)
+    Year = models.ForeignKey(YearDB, on_delete=models.CASCADE, null=True)
+    monthly = models.CharField(verbose_name="月份", choices=MONTH_CHOICE,
+                               default='1月',
+                               max_length=20, null=True)
+    cash_pool =  models.DecimalField("现金池", max_digits=10, decimal_places=2)
+    insurance_pool = models.DecimalField("保险池", max_digits=10, decimal_places=2)
+    goal_pool = models.DecimalField("目标池", max_digits=10, decimal_places=2)
+    invest_pool = models.DecimalField("金鹅池", max_digits=10, decimal_places=2)
+    invest_income = models.DecimalField("投资回报", max_digits=10, decimal_places=2)
+    create_time = models.DateTimeField("记录时间", auto_now=True)
+
+    class Meta:
+        verbose_name = "资金池管理"
+        verbose_name_plural = "资金池管理"
+
+    def __str__(self):
+        return self.monthly
+

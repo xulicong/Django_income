@@ -7,11 +7,19 @@
 
 </head>
 <body>
-    <div id="10cb3a1c34a448afa2daf07bee666e56" style="width:900px; height:500px;"></div>
+    <div id="24be8478ec8f479592d790b7bf9a1422" class="chart-container" style="width:900px; height:500px;"></div>
     <script>
-        var chart_10cb3a1c34a448afa2daf07bee666e56 = echarts.init(
-            document.getElementById('10cb3a1c34a448afa2daf07bee666e56'), 'white', {renderer: 'canvas'});
-        var option_10cb3a1c34a448afa2daf07bee666e56 = {
+        var chart_24be8478ec8f479592d790b7bf9a1422 = echarts.init(
+            document.getElementById('24be8478ec8f479592d790b7bf9a1422'), 'white', {renderer: 'canvas'});
+        var option_24be8478ec8f479592d790b7bf9a1422 = {
+    "animation": true,
+    "animationThreshold": 2000,
+    "animationDuration": 1000,
+    "animationEasing": "cubicOut",
+    "animationDelay": 0,
+    "animationDurationUpdate": 300,
+    "animationEasingUpdate": "cubicOut",
+    "animationDelayUpdate": 0,
     "color": [
         "#c23531",
         "#2f4554",
@@ -61,7 +69,7 @@
             "label": {
                 "show": true,
                 "position": "top",
-                "fontSize": 12
+                "margin": 8
             },
             "markLine": {
                 "silent": false,
@@ -69,7 +77,7 @@
                 "label": {
                     "show": true,
                     "position": "top",
-                    "fontSize": 12
+                    "margin": 8
                 },
                 "data": [
                     {
@@ -95,7 +103,11 @@
             "selected": {
                 "\u6bcf\u6708\u5b9e\u9645\u652f\u51fa": true
             },
-            "show": true
+            "show": true,
+            "padding": 5,
+            "itemGap": 10,
+            "itemWidth": 25,
+            "itemHeight": 14
         }
     ],
     "tooltip": {
@@ -110,25 +122,6 @@
         },
         "borderWidth": 0
     },
-    "yAxis": [
-        {
-            "show": true,
-            "scale": false,
-            "nameLocation": "end",
-            "nameGap": 15,
-            "gridIndex": 0,
-            "inverse": false,
-            "splitLine": {
-                "show": false,
-                "lineStyle": {
-                    "width": 1,
-                    "opacity": 1,
-                    "curveness": 0,
-                    "type": "solid"
-                }
-            }
-        }
-    ],
     "xAxis": [
         {
             "show": true,
@@ -140,12 +133,16 @@
                 "show": true,
                 "position": "top",
                 "rotate": "45",
-                "fontSize": 12
+                "margin": 8
             },
             "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
             "splitLine": {
                 "show": false,
                 "lineStyle": {
+                    "show": true,
                     "width": 1,
                     "opacity": 1,
                     "curveness": 0,
@@ -165,14 +162,39 @@
                 "2020\u5e741\u6708",
                 "2020\u5e742\u6708",
                 "2020\u5e743\u6708",
-                "2020\u5e745\u6708"
+                "2020\u5e744\u6708"
             ]
+        }
+    ],
+    "yAxis": [
+        {
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "gridIndex": 0,
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
+            "splitLine": {
+                "show": false,
+                "lineStyle": {
+                    "show": true,
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            }
         }
     ],
     "title": [
         {
             "text": "\u652f\u51fa-\u67f1\u5f62\u56fe",
-            "subtext": "All"
+            "subtext": "All",
+            "padding": 5,
+            "itemGap": 10
         }
     ],
     "toolbox": {
@@ -183,30 +205,72 @@
         "left": "80%",
         "feature": {
             "saveAsImage": {
+                "type": "png",
+                "backgroundColor": "auto",
+                "connectedBackgroundColor": "#fff",
                 "show": true,
-                "title": "save as image",
-                "type": "png"
+                "title": "\u4fdd\u5b58\u4e3a\u56fe\u7247",
+                "pixelRatio": 1
             },
             "restore": {
                 "show": true,
-                "title": "restore"
+                "title": "\u8fd8\u539f"
             },
             "dataView": {
                 "show": true,
-                "title": "data view",
-                "readOnly": false
+                "title": "\u6570\u636e\u89c6\u56fe",
+                "readOnly": false,
+                "lang": [
+                    "\u6570\u636e\u89c6\u56fe",
+                    "\u5173\u95ed",
+                    "\u5237\u65b0"
+                ],
+                "backgroundColor": "#fff",
+                "textareaColor": "#fff",
+                "textareaBorderColor": "#333",
+                "textColor": "#000",
+                "buttonColor": "#c23531",
+                "buttonTextColor": "#fff"
             },
             "dataZoom": {
                 "show": true,
                 "title": {
-                    "zoom": "data zoom",
-                    "back": "data zoom restore"
+                    "zoom": "\u533a\u57df\u7f29\u653e",
+                    "back": "\u533a\u57df\u7f29\u653e\u8fd8\u539f"
+                },
+                "icon": {}
+            },
+            "magicType": {
+                "show": true,
+                "type": [
+                    "line",
+                    "bar",
+                    "stack",
+                    "tiled"
+                ],
+                "title": {
+                    "line": "\u5207\u6362\u4e3a\u6298\u7ebf\u56fe",
+                    "bar": "\u5207\u6362\u4e3a\u67f1\u72b6\u56fe",
+                    "stack": "\u5207\u6362\u4e3a\u5806\u53e0",
+                    "tiled": "\u5207\u6362\u4e3a\u5e73\u94fa"
+                },
+                "icon": {}
+            },
+            "brush": {
+                "icon": {},
+                "title": {
+                    "rect": "\u77e9\u5f62\u9009\u62e9",
+                    "polygon": "\u5708\u9009",
+                    "lineX": "\u6a2a\u5411\u9009\u62e9",
+                    "lineY": "\u7eb5\u5411\u9009\u62e9",
+                    "keep": "\u4fdd\u6301\u9009\u62e9",
+                    "clear": "\u6e05\u9664\u9009\u62e9"
                 }
             }
         }
     }
 };
-        chart_10cb3a1c34a448afa2daf07bee666e56.setOption(option_10cb3a1c34a448afa2daf07bee666e56);
+        chart_24be8478ec8f479592d790b7bf9a1422.setOption(option_24be8478ec8f479592d790b7bf9a1422);
     </script>
 </body>
 </html>

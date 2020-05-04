@@ -26,6 +26,9 @@ urlpatterns = [
     path('income/', views.income),
     path('debts/', views.debts),
     path('debts_manage/', views.debts_manage),
+    path('debts_plot/', views.debts_plot),
     path('plot/', views.plot),
-    path('select_plot/', views.select_plot)
+    path('select_plot/', views.select_plot),
+    path('analysis/', views.analysis),
+    path('fund/', views.fund),
 ]

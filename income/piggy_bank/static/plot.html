@@ -7,11 +7,11 @@
 
 </head>
 <body>
-    <div id="24be8478ec8f479592d790b7bf9a1422" class="chart-container" style="width:900px; height:500px;"></div>
+    <div id="cbdbaa64f54c441c9bbd118ae037b411" class="chart-container" style="width:900px; height:500px;"></div>
     <script>
-        var chart_24be8478ec8f479592d790b7bf9a1422 = echarts.init(
-            document.getElementById('24be8478ec8f479592d790b7bf9a1422'), 'white', {renderer: 'canvas'});
-        var option_24be8478ec8f479592d790b7bf9a1422 = {
+        var chart_cbdbaa64f54c441c9bbd118ae037b411 = echarts.init(
+            document.getElementById('cbdbaa64f54c441c9bbd118ae037b411'), 'white', {renderer: 'canvas'});
+        var option_cbdbaa64f54c441c9bbd118ae037b411 = {
     "animation": true,
     "animationThreshold": 2000,
     "animationDuration": 1000,
@@ -48,28 +48,92 @@
     ],
     "series": [
         {
-            "type": "bar",
-            "name": "\u6bcf\u6708\u5b9e\u9645\u652f\u51fa",
+            "type": "line",
+            "name": "\u6bcf\u6708\u5b9e\u9645\u5b58\u6b3e",
+            "connectNulls": false,
+            "symbolSize": 4,
+            "showSymbol": true,
+            "smooth": false,
+            "step": false,
             "data": [
-                1927.74,
-                429904.93,
-                5958.39,
-                7537.28,
-                7394.48,
-                8232.42,
-                7853.8,
-                8512.7,
-                8700.81,
-                10340.67,
-                6255.98,
-                8235.92,
-                7566.42
+                [
+                    "4\u6708",
+                    142633.0
+                ],
+                [
+                    "5\u6708",
+                    53313.61
+                ],
+                [
+                    "6\u6708",
+                    45935.92
+                ],
+                [
+                    "7\u6708",
+                    30497.3
+                ],
+                [
+                    "8\u6708",
+                    34564.56
+                ],
+                [
+                    "9\u6708",
+                    26712.43
+                ],
+                [
+                    "10\u6708",
+                    30958.5
+                ],
+                [
+                    "11\u6708",
+                    14284.75
+                ],
+                [
+                    "12\u6708",
+                    16592.15
+                ]
             ],
-            "barCategoryGap": "20%",
+            "hoverAnimation": true,
             "label": {
                 "show": true,
                 "position": "top",
                 "margin": 8
+            },
+            "lineStyle": {
+                "show": true,
+                "width": 1,
+                "opacity": 1,
+                "curveness": 0,
+                "type": "solid"
+            },
+            "areaStyle": {
+                "opacity": 0
+            },
+            "markPoint": {
+                "label": {
+                    "show": true,
+                    "position": "inside",
+                    "color": "#fff",
+                    "margin": 8
+                },
+                "data": [
+                    {
+                        "name": "Maximum",
+                        "coord": [
+                            7,
+                            14284.75
+                        ],
+                        "value": 14284.75
+                    },
+                    {
+                        "name": "Maximum",
+                        "coord": [
+                            0,
+                            142633.0
+                        ],
+                        "value": 142633.0
+                    }
+                ]
             },
             "markLine": {
                 "silent": false,
@@ -82,11 +146,12 @@
                 "data": [
                     {
                         "name": "mean_Value",
-                        "yAxis": 39878.579999999994
+                        "yAxis": 43943.579999999994
                     }
                 ]
             },
-            "itemStyle": {},
+            "zlevel": 0,
+            "z": 0,
             "rippleEffect": {
                 "show": true,
                 "brushType": "stroke",
@@ -98,10 +163,10 @@
     "legend": [
         {
             "data": [
-                "\u6bcf\u6708\u5b9e\u9645\u652f\u51fa"
+                "\u6bcf\u6708\u5b9e\u9645\u5b58\u6b3e"
             ],
             "selected": {
-                "\u6bcf\u6708\u5b9e\u9645\u652f\u51fa": true
+                "\u6bcf\u6708\u5b9e\u9645\u5b58\u6b3e": true
             },
             "show": true,
             "padding": 5,
@@ -150,19 +215,15 @@
                 }
             },
             "data": [
-                "2019\u5e744\u6708",
-                "2019\u5e745\u6708",
-                "2019\u5e746\u6708",
-                "2019\u5e747\u6708",
-                "2019\u5e748\u6708",
-                "2019\u5e749\u6708",
-                "2019\u5e7410\u6708",
-                "2019\u5e7411\u6708",
-                "2019\u5e7412\u6708",
-                "2020\u5e741\u6708",
-                "2020\u5e742\u6708",
-                "2020\u5e743\u6708",
-                "2020\u5e744\u6708"
+                "4\u6708",
+                "5\u6708",
+                "6\u6708",
+                "7\u6708",
+                "8\u6708",
+                "9\u6708",
+                "10\u6708",
+                "11\u6708",
+                "12\u6708"
             ]
         }
     ],
@@ -191,8 +252,8 @@
     ],
     "title": [
         {
-            "text": "\u652f\u51fa-\u67f1\u5f62\u56fe",
-            "subtext": "All",
+            "text": "\u50a8\u84c4-\u6298\u7ebf\u56fe",
+            "subtext": "2019",
             "padding": 5,
             "itemGap": 10
         }
@@ -270,7 +331,7 @@
         }
     }
 };
-        chart_24be8478ec8f479592d790b7bf9a1422.setOption(option_24be8478ec8f479592d790b7bf9a1422);
+        chart_cbdbaa64f54c441c9bbd118ae037b411.setOption(option_cbdbaa64f54c441c9bbd118ae037b411);
     </script>
 </body>
 </html>

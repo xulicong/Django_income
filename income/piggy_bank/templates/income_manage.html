@@ -12,7 +12,7 @@
 <nav class="navbar navbar-expend-sm bg-dark navbar-dark fixed-top navbar nav_style_01 c-navbar S_cbnavb_50c80eaa">
     <div class="container">
         <ul class="nav justify-content-center">
-        <form method="post", action="/plot/">
+        <form method="post" action="/plot/">
         {% csrf_token %}
             <input name="plot" type="image" src="/static/plot.svg" class="btn" onmouseover="this.src='/static/plot1.svg'" onmouseout="this.src='/static/plot.svg'"/>
             <a>&nbsp;</a>

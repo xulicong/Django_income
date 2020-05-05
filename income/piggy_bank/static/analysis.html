@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <title>Awesome-pyecharts</title>
             <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
-        <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-gl.min.js"></script>
+        <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-liquidfill.min.js"></script>
+        <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/macarons.js"></script>
+        <script type="text/javascript" src="https://assets.pyecharts.org/assets/jquery.min.js"></script>
+        <script type="text/javascript" src="https://assets.pyecharts.org/assets/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="https://assets.pyecharts.org/assets/ResizeSensor.js"></script>
+
+            <link rel="stylesheet"  href="https://assets.pyecharts.org/assets/jquery-ui.css">
 
 </head>
 <body>
-    <div id="51f68077db41408892dc06120b6f2192" class="chart-container" style="width:1400px; height:700px;"></div>
+    <style>.box {  }; </style>
+        <button onclick="downloadCfg()">Save Config</button>
+    <div class="box">
+                <div id="723250bbe8104eb1b6dca12cb83de854" class="chart-container" style="width:900px; height:500px;"></div>
     <script>
-        var chart_51f68077db41408892dc06120b6f2192 = echarts.init(
-            document.getElementById('51f68077db41408892dc06120b6f2192'), 'white', {renderer: 'canvas'});
-        var option_51f68077db41408892dc06120b6f2192 = {
+        var chart_723250bbe8104eb1b6dca12cb83de854 = echarts.init(
+            document.getElementById('723250bbe8104eb1b6dca12cb83de854'), 'white', {renderer: 'canvas'});
+        var option_723250bbe8104eb1b6dca12cb83de854 = {
     "animation": true,
     "animationThreshold": 2000,
     "animationDuration": 1000,
@@ -49,141 +58,168 @@
     ],
     "series": [
         {
-            "type": "bar3D",
-            "name": "\u5b58\u6b3e",
+            "type": "liquidFill",
+            "name": "lq",
             "data": [
-                [
-                    0,
-                    0,
-                    22898.25
-                ],
-                [
-                    0,
-                    1,
-                    0
-                ],
-                [
-                    1,
-                    0,
-                    28738.45
-                ],
-                [
-                    1,
-                    1,
-                    0
-                ],
-                [
-                    2,
-                    0,
-                    30975.8
-                ],
-                [
-                    2,
-                    1,
-                    0
-                ],
-                [
-                    3,
-                    0,
-                    36882.36
-                ],
-                [
-                    3,
-                    1,
-                    142633.0
-                ],
-                [
-                    4,
-                    0,
-                    0
-                ],
-                [
-                    4,
-                    1,
-                    53313.61
-                ],
-                [
-                    5,
-                    0,
-                    0
-                ],
-                [
-                    5,
-                    1,
-                    45935.92
-                ],
-                [
-                    6,
-                    0,
-                    0
-                ],
-                [
-                    6,
-                    1,
-                    30497.3
-                ],
-                [
-                    7,
-                    0,
-                    0
-                ],
-                [
-                    7,
-                    1,
-                    34564.56
-                ],
-                [
-                    8,
-                    0,
-                    0
-                ],
-                [
-                    8,
-                    1,
-                    26712.43
-                ],
-                [
-                    9,
-                    0,
-                    0
-                ],
-                [
-                    9,
-                    1,
-                    30958.5
-                ],
-                [
-                    10,
-                    0,
-                    0
-                ],
-                [
-                    10,
-                    1,
-                    14284.75
-                ],
-                [
-                    11,
-                    0,
-                    0
-                ],
-                [
-                    11,
-                    1,
-                    16592.15
-                ]
+                -0.11355171930714922,
+                -0.013551719307149213,
+                0.08644828069285079
+            ],
+            "waveAnimation": true,
+            "animationDuration": 2000,
+            "animationDurationUpdate": 1000,
+            "color": [
+                "#294D99",
+                "#156ACF",
+                "#1598ED",
+                "#45BDFF"
+            ],
+            "shape": "circle",
+            "outline": {
+                "show": false
+            },
+            "label": {
+                "show": true,
+                "position": "inside",
+                "margin": 8,
+                "fontSize": 50,
+                "formatter": function (param) {                                 return (Math.floor(param.value * 10000) / 100) + '%';                             }
+            }
+        }
+    ],
+    "legend": [
+        {
+            "data": [],
+            "selected": {},
+            "show": true,
+            "padding": 5,
+            "itemGap": 10,
+            "itemWidth": 25,
+            "itemHeight": 14
+        }
+    ],
+    "tooltip": {
+        "show": true,
+        "trigger": "item",
+        "triggerOn": "mousemove|click",
+        "axisPointer": {
+            "type": "line"
+        },
+        "textStyle": {
+            "fontSize": 14
+        },
+        "borderWidth": 0
+    },
+    "title": [
+        {
+            "text": "\u8d22\u5bcc\u81ea\u7531\u5ea6",
+            "padding": 5,
+            "itemGap": 10
+        }
+    ]
+};
+        chart_723250bbe8104eb1b6dca12cb83de854.setOption(option_723250bbe8104eb1b6dca12cb83de854);
+    </script>
+<br/>                <div id="13f56c3aed194fbbb5c57e05af071077" class="chart-container" style="width:900px; height:500px;"></div>
+    <script>
+        var chart_13f56c3aed194fbbb5c57e05af071077 = echarts.init(
+            document.getElementById('13f56c3aed194fbbb5c57e05af071077'), 'macarons', {renderer: 'canvas'});
+        var option_13f56c3aed194fbbb5c57e05af071077 = {
+    "animation": true,
+    "animationThreshold": 2000,
+    "animationDuration": 1000,
+    "animationEasing": "cubicOut",
+    "animationDelay": 0,
+    "animationDurationUpdate": 300,
+    "animationEasingUpdate": "cubicOut",
+    "animationDelayUpdate": 0,
+    "series": [
+        {
+            "type": "pie",
+            "clockwise": true,
+            "data": [
+                {
+                    "name": "\u73b0\u91d1\u6c60",
+                    "value": 17694.91
+                },
+                {
+                    "name": "\u76ee\u6807\u6c60",
+                    "value": 5036.40
+                },
+                {
+                    "name": "\u4fdd\u9669\u6c60",
+                    "value": 42.84
+                },
+                {
+                    "name": "\u91d1\u9e45\u6c60",
+                    "value": 13547.56
+                }
+            ],
+            "radius": [
+                "40%",
+                "55%"
+            ],
+            "center": [
+                "50%",
+                "50%"
             ],
             "label": {
-                "show": false,
-                "position": "top",
-                "margin": 8
+                "show": true,
+                "position": "outside",
+                "margin": 8,
+                "formatter": "  {b|{b}: }{c}  {per|{d}%}  ",
+                "backgroundColor": "#eee",
+                "borderColor": "#aaa",
+                "borderWidth": 1,
+                "borderRadius": 4,
+                "rich": {
+                    "a": {
+                        "color": "#999",
+                        "lineHeight": 22,
+                        "align": "center"
+                    },
+                    "abg": {
+                        "backgroundColor": "#e3e3e3",
+                        "width": "100%",
+                        "align": "right",
+                        "height": 22,
+                        "borderRadius": [
+                            4,
+                            4,
+                            0,
+                            0
+                        ]
+                    },
+                    "hr": {
+                        "borderColor": "#aaa",
+                        "width": "100%",
+                        "borderWidth": 0.5,
+                        "height": 0
+                    },
+                    "b": {
+                        "fontSize": 16,
+                        "lineHeight": 33
+                    },
+                    "per": {
+                        "color": "#eee",
+                        "backgroundColor": "#334455",
+                        "padding": [
+                            2,
+                            4
+                        ],
+                        "borderRadius": 2
+                    }
+                }
             }
         }
     ],
     "legend": [
         {
             "data": [
-                "\u5b58\u6b3e"
+                "\u73b0\u91d1\u6c60",
+                "\u76ee\u6807\u6c60",
+                "\u4fdd\u9669\u6c60",
+                "\u91d1\u9e45\u6c60"
             ],
             "selected": {},
             "show": true,
@@ -205,92 +241,46 @@
         },
         "borderWidth": 0
     },
-    "visualMap": {
-        "show": true,
-        "type": "continuous",
-        "min": 0,
-        "max": 100000,
-        "inRange": {
-            "color": [
-                "#313695",
-                "#4575b4",
-                "#74add1",
-                "#abd9e9",
-                "#e0f3f8",
-                "#ffffbf",
-                "#fee090",
-                "#fdae61",
-                "#f46d43",
-                "#d73027",
-                "#a50026"
-            ]
-        },
-        "calculable": true,
-        "inverse": false,
-        "splitNumber": 5,
-        "orient": "vertical",
-        "showLabel": true,
-        "itemWidth": 20,
-        "itemHeight": 140,
-        "borderWidth": 0
-    },
-    "xAxis3D": {
-        "data": [
-            "1\u6708",
-            "2\u6708",
-            "3\u6708",
-            "4\u6708",
-            "5\u6708",
-            "6\u6708",
-            "7\u6708",
-            "8\u6708",
-            "9\u6708",
-            "10\u6708",
-            "11\u6708",
-            "12\u6708"
-        ],
-        "nameGap": 20,
-        "type": "category",
-        "axisLabel": {
-            "margin": 8
-        }
-    },
-    "yAxis3D": {
-        "data": [
-            "2020",
-            "2019"
-        ],
-        "nameGap": 20,
-        "type": "category",
-        "axisLabel": {
-            "margin": 8
-        }
-    },
-    "zAxis3D": {
-        "nameGap": 20,
-        "type": "value",
-        "axisLabel": {
-            "margin": 8
-        }
-    },
-    "grid3D": {
-        "boxWidth": 200,
-        "boxHeight": 100,
-        "boxDepth": 80,
-        "viewControl": {
-            "autoRotate": false,
-            "autoRotateSpeed": 10,
-            "rotateSensitivity": 1
-        }
-    },
     "title": [
         {
+            "text": "\u8d44\u91d1\u6c60",
             "padding": 5,
             "itemGap": 10
         }
     ]
 };
-        chart_51f68077db41408892dc06120b6f2192.setOption(option_51f68077db41408892dc06120b6f2192);
+        chart_13f56c3aed194fbbb5c57e05af071077.setOption(option_13f56c3aed194fbbb5c57e05af071077);
+    </script>
+<br/>    </div>
+    <script>
+            $('#723250bbe8104eb1b6dca12cb83de854').resizable().draggable().css('border-style', 'dashed').css('border-width', '1px');$("#723250bbe8104eb1b6dca12cb83de854>div:nth-child(1)").width("100%").height("100%");
+            new ResizeSensor(jQuery('#723250bbe8104eb1b6dca12cb83de854'), function() { chart_723250bbe8104eb1b6dca12cb83de854.resize()});
+            $('#13f56c3aed194fbbb5c57e05af071077').resizable().draggable().css('border-style', 'dashed').css('border-width', '1px');$("#13f56c3aed194fbbb5c57e05af071077>div:nth-child(1)").width("100%").height("100%");
+            new ResizeSensor(jQuery('#13f56c3aed194fbbb5c57e05af071077'), function() { chart_13f56c3aed194fbbb5c57e05af071077.resize()});
+            var charts_id = ['723250bbe8104eb1b6dca12cb83de854','13f56c3aed194fbbb5c57e05af071077'];
+function downloadCfg () {
+    const fileName = 'chart_config.json'
+    let downLink = document.createElement('a')
+    downLink.download = fileName
+
+    let result = []
+    for(let i=0; i<charts_id.length; i++) {
+        chart = $('#'+charts_id[i])
+        result.push({
+            cid: charts_id[i],
+            width: chart.css("width"),
+            height: chart.css("height"),
+            top: chart.offset().top + "px",
+            left: chart.offset().left + "px"
+        })
+    }
+
+    let blob = new Blob([JSON.stringify(result)])
+    downLink.href = URL.createObjectURL(blob)
+    document.body.appendChild(downLink)
+    downLink.click()
+    document.body.removeChild(downLink)
+}
     </script>
 </body>
 </html>
